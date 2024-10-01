@@ -1,0 +1,2 @@
+Desarrollar un pipeline que tenga 4 stages para las operaciones aritmeticas basicas. (Suma, Resta, Division, Multiplicacion) en el caso de la division NO se puede dividir por 0
+Y realizar un Stage mas que genere un fichero de salida bajo el nombre "resultados_FechaDeHoy.txt" imprimiendo los resultados de las operaciones aritmeticas. 
