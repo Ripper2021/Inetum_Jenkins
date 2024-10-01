@@ -6,7 +6,10 @@ pipeline
   {
     stage("Saludar")
     {
+      steps
+      {
       echo "Hola Mundo!"
+      }
     }
   }
 }
