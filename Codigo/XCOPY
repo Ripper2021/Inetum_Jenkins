@@ -1,0 +1,15 @@
+pipeline
+{
+    agent any
+    stages
+    {
+        stage("Ejecucion de comando BAT")
+        {
+            steps
+            {
+                bat """ xcopy "C:\\Users\\Gusta\\OneDrive\\Documentos\\Jenkins.txt" "C:\\" /y """
+                echo "Se ejecuto el comando"
+            }
+        }
+    }
+}
