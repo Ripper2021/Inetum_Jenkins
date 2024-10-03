@@ -1,0 +1,94 @@
+pipeline
+{
+    agent any
+    
+    tools
+    {
+        maven 'Maven'
+    }
+    
+    options
+    {
+        timeout(time:5, unit: "MINUTES")
+    }
+    environment
+    {
+        nombre_usuario= "Gustavo"
+    }
+    
+    stages
+    {
+        stage("Clonar el repositorio de Github")
+        {
+            steps
+            {
+                    git branch: "Produccion", url: "https://github.com/Ripper2021/Inetum_Jenkins.git"
+            }
+        }
+        
+        stage("Comando MVN Test")
+        {
+            steps
+            {
+                script
+                {
+                dir("C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\Inetum_008\\Maven")
+                {
+                bat 'mvn test'
+                }   
+                }
+            }
+        }
+        
+        stage("Comando MVN Compile")
+        {
+            steps
+            {
+                script
+                {
+                dir("C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\Inetum_008\\Maven")
+                {
+                bat 'mvn compile'
+                }
+                }
+            }
+        }
+        
+        stage("Comando MVN Clean Install")
+        {
+            steps
+            {
+                script
+                {
+                                dir("C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\Inetum_008\\Maven")
+                {
+                bat 'mvn clean install'
+                }
+                }
+                    
+                }
+        }
+        
+        stage("Copio el archivo a su ruta")
+        {
+            steps
+            {
+                bat """xcopy "C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\Inetum_008\\target\\archivo-0.0.1-SNAPSHOT.jar" "C:\\" """
+            }
+        }
+    }
+
+post
+{
+    always
+    {
+        echo "Se ejecuto correctamente"
+    }
+    
+    success
+    {
+        echo "Se ejecuto de forma correcta."
+    }
+}
+    
+}

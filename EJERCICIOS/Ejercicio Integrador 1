@@ -1,0 +1,83 @@
+Desarrollar un pipeline que tenga 4 stages para las operaciones aritmeticas basicas. (Suma, Resta, Division, Multiplicacion) en el caso de la division NO se puede dividir por 0
+Y realizar un Stage mas que genere un fichero de salida bajo el nombre "resultados_FechaDeHoy.txt" imprimiendo los resultados de las operaciones aritmeticas. 
+
+
+numero1 = 10
+numero2 =20
+fecha_hoy = new Date().format("ddMMyyyy")
+pipeline
+{
+    agent any
+    
+    stages
+    {
+        stage("Suma")
+        {
+            steps
+            {
+                script
+                {
+                    suma = numero1+ numero2
+                    string_suma = "La suma es: " + suma
+                }
+            }
+        }
+        
+        stage("Resta")
+        {
+            steps
+            {
+                script
+                {
+                    resta = numero1- numero2
+                    string_resta = "La Resta es: " + resta
+                    
+                }
+            }
+            
+        }
+        
+        stage("Multiplicacion")
+        {
+            steps
+            {
+                script
+                {
+                    mult = numero1*numero2
+                    string_mult = "La multiplicacion es: " + mult
+                }
+            }
+        }
+        
+        stage("Division")
+        {
+            steps
+            {
+                script
+                {
+                    if(numero1 == 0 || numero2 == 0)
+                    {
+                        echo "No se hace nada"
+                    }
+                    else
+                    {
+                        division = numero1 / numero2
+                        string_division = "La division es:  " + division
+                    }
+                }
+            }
+        }
+        
+        stage("Generar el TXT")
+        {
+            steps
+            {
+                script
+                {
+                    string_final = string_suma + "\n" + string_resta + "\n"+ string_mult + "\n" + string_division
+                    writeFile(file: "resultados_${fecha_hoy}", text: string_final )
+                }
+            }
+        }
+    }
+}

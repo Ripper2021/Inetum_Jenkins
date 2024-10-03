@@ -1,0 +1,38 @@
+pipeline
+{
+    agent any
+    stages
+    {
+        stage("Matriz")
+        {
+            matrix
+            {
+                axes
+                {
+                    axis
+                    {
+                        name 'PLATAFORMA'
+                        values 'linux', 'windows'
+                    }
+                    
+                    axis
+                    {
+                        name 'BROWSER'
+                        values 'chrome', 'firefox', 'edge'
+                    }
+                }
+                
+                stages
+                {
+                    stage("Test")
+                    {
+                        steps
+                        {
+                            echo "Probando en ${PLATAFORMA} con ${BROWSER}"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

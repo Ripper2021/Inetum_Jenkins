@@ -1,0 +1,46 @@
+pipeline
+{
+    agent any
+    
+    environment
+    {
+       ruta = "C:\\" 
+    }
+    
+    options
+    {
+        timeout(time:5, unit: "MINUTES") // MINUTES // HOURS //NANOSECONDS // SECONDS
+        retry(3) //Va a reintentar ejecutarlo 3 veces. 
+        quietPeriod(20) //Expresado en segundos. 
+    }
+    
+    stages
+    {
+        stage("Pasos")
+        {
+            steps
+            {
+                echo "Estos son mis pasos"
+            }
+        }
+        
+    }
+post //Todo lo que sucede DESPUES de la ejecución
+{
+ always
+ {
+     echo "Se ejecuto."
+ }
+ 
+ failure
+ {
+     echo "Fallo la tarea"
+     mail to: "admin@inetum.com", subject: "Pipeline fallo, pór favor revisar.", body: "El pipeline ha fallado."
+ }
+ 
+ success
+ {
+     echo "Enhorabuena, se ha ejecutado correctamente."
+ }
+}
+}

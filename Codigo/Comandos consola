@@ -1,0 +1,27 @@
+//Obtiene todas las tareas de Jenkins
+//Jenkins.instance.getAllItems().each { job -> println(job.fullName)}
+
+//Ejecutamos un comando del simbolo de sistema
+def comando = "cmd /c ipconfig /flushdns"
+def procedimiento = comando.execute()
+procedimiento.waitFor() //Con esto nos aseguramos que el SCRIPT NO continue hasta que el comando haya finalizado su ejecucion
+println("Salida del comando: ${procedimiento.text}")
+
+//Obtener todos los usuarios
+def allUsers = User.getAll()
+println("Todos los usuarios:")
+allUsers.each { user -> println ("- ${user.id}")
+}
+//Borrar un usuario
+def usuarios_id = ["usuariofinal"]
+                   usuarios_id.each { usuario_id -> def usuario = User.get(usuario_id)
+                     if(usuario !=null)
+                     {
+                      	usuario.delete()
+                       println("El usuario ${usuario_id} ha sido borrado")
+                     }
+                     else
+                     {
+                       println ("No se encontro el usuario con el id ${usuario_id}") 
+                     }
+                   }

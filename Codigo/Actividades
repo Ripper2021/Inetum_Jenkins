@@ -1,0 +1,88 @@
+pipeline
+{
+    agent any
+    environment
+    {
+        CONSTANTE_FINAL = "Este es mi valor"
+    }
+    
+    stages
+    {
+        stage("Ejemplo para pensar")
+        {
+            steps
+            {
+                script
+                {
+                    CONSTANTE_FINAL = "Hola que tal, como te va?"
+                    println "Constante final de variable de entorno: ${env.CONSTANTE_FINAL}"
+                    println "Venga y escriba lo que quiera y PUM, accediste a una variable: ${CONSTANTE_FINAL}"
+                }
+            }
+        }
+    }
+}
+
+
+pipeline
+{
+    agent any
+    
+    environment
+    {
+        MI_NOMBRE = "Gustavo"
+        MI_APELLIDO = "Vargas"
+        MI_NUMERO = 100
+        MI_NUMERO2 = 100
+    }
+    
+    stages
+    {
+        stage("Ejemplo de variables de entorno.")
+        {
+            steps
+            {
+                script
+                {
+                    suma = MI_NUMERO.toInteger() + MI_NUMERO2.toInteger()
+                    println MI_NOMBRE
+                    println MI_APELLIDO
+                    println "La suma es: " + suma
+                }
+            }
+        }
+    }
+}
+
+pipeline
+{
+    agent any
+    stages
+    {
+        stage("Leer un txt")
+        {
+            steps
+            {
+                script
+                {
+                variable_txt = readFile(file: "C:\\Users\\Gusta\\OneDrive\\Documentos\\Jenkins.txt")
+                println variable_txt
+                }
+            }
+        }
+        
+        stage("Escribir un txt")
+        {
+            steps
+            {
+                script
+                {
+                    fecha = new Date().format("dd/MM/yyyy")
+                    cadena = "Este es mi contenido que voy a insertar en un fichero nuevo. " + fecha 
+                    writeFile(file: "Fichero_Salida.txt", text: cadena)
+                    println ("El fichero fue escrito.")
+                }
+            }
+        }
+    }
+}
